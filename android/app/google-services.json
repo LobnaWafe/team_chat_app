@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124454288171",
+    "project_id": "t-chat-app-6be55",
+    "storage_bucket": "t-chat-app-6be55.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124454288171:android:60310fed562f6d25a3236e",
+        "android_client_info": {
+          "package_name": "com.example.chats_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj1B0INDWQ9u_pU4gWcnoYX0UBlWIjYnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
