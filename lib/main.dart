@@ -12,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   // comment fi ay heta
@@ -21,6 +22,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await Supabase.initialize(
+    url: 'https://koljiuhzxfeiibtreicu.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbGppdWh6eGZlaWlidHJlaWN1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyOTA5MDAsImV4cCI6MjA3Nzg2NjkwMH0.iCoGGVmN7XEIaJVCPsnDmxQsPrgkdmH1Xk4r7SxjvvI',
+  );
+
 
   // تهيئة الكاش
   await CacheHelper.init();
