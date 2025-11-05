@@ -2,6 +2,7 @@ import 'package:chats_app/features/authentication/presentation/views/sign_up_vie
 import 'package:chats_app/features/chat/presentation/views/chat_view.dart';
 import 'package:chats_app/features/chat/presentation/views/map_view.dart';
 import 'package:chats_app/features/profile/presentation/view/profile_view.dart';
+import 'package:chats_app/navigaton.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -9,13 +10,15 @@ abstract class AppRouter {
   static final String kChat = "/chat_view";
   static final String kProfile = "/profile_view";
   static final String kMap = "/map_view";
+  static final String knormalNavigation='/';
 
   static final router = GoRouter(routes: [
 
-   GoRoute(path: "/",builder: (context,state)=>ChatView()),
+   GoRoute(path: kChat,builder: (context,state)=>ChatView()),
    // GoRoute(path: '/',builder: (context,state)=>SignInView()),
-    GoRoute(path: '/',builder: (context,state)=>ProfileView()),
+    GoRoute(path: kProfile,builder: (context,state)=>ProfileView()),
     GoRoute(path: kSignUp,builder: (context,state)=>SignUpView()),
+    GoRoute(path: knormalNavigation,builder: (context,state)=>NormalBottom()),
     GoRoute(path: kMap,builder: (context,state){
     final data = state.extra as Map<String, dynamic>;
     return MapView(
