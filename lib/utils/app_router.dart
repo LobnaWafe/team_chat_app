@@ -1,4 +1,6 @@
-import 'package:chats_app/features/authentication/presentation/views/sign_up_view.dart';
+
+import 'package:chats_app/features/authentication/presentation/views/login_screen.dart';
+import 'package:chats_app/features/authentication/presentation/views/signup_screen.dart';
 import 'package:chats_app/features/chat/presentation/views/chat_view.dart';
 import 'package:chats_app/features/chat/presentation/views/map_view.dart';
 import 'package:chats_app/features/profile/presentation/view/profile_view.dart';
@@ -10,14 +12,14 @@ abstract class AppRouter {
   static final String kChat = "/chat_view";
   static final String kProfile = "/profile_view";
   static final String kMap = "/map_view";
-  static final String knormalNavigation='/';
+  static final String knormalNavigation='/normal_navigation_view ';
 
   static final router = GoRouter(routes: [
 
-   GoRoute(path: kChat,builder: (context,state)=>ChatView()),
-   // GoRoute(path: '/',builder: (context,state)=>SignInView()),
+  GoRoute(path: kChat,builder: (context,state)=>ChatView()),
+    GoRoute(path: '/',builder: (context,state)=>LoginScreen()),
     GoRoute(path: kProfile,builder: (context,state)=>ProfileView()),
-    GoRoute(path: kSignUp,builder: (context,state)=>SignUpView()),
+    GoRoute(path: kSignUp,builder: (context,state)=>SignUpScreen()),
     GoRoute(path: knormalNavigation,builder: (context,state)=>NormalBottom()),
     GoRoute(path: kMap,builder: (context,state){
     final data = state.extra as Map<String, dynamic>;
