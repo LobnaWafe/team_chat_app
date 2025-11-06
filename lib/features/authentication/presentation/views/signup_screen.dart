@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:chats_app/features/authentication/presentation/view_model/cubits/cubit/auth_cubit.dart';
+import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widgets/TextField.dart';
 import '../widgets/custom_button.dart';
@@ -81,7 +83,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   _showSnackBar('Creating account...', Colors.blueAccent);
                 } else if (state is AuthSuccess) {
                   _showSnackBar(state.message, Colors.green);
-                  Navigator.pushReplacementNamed(context, '/login');
+                //  Navigator.pushReplacementNamed(context, '/login');
+                GoRouter.of(context).push(AppRouter.kSignIn);
                 } else if (state is AuthError) {
                   _showSnackBar(state.message, Colors.redAccent);
                 }
@@ -119,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           backgroundColor: Colors.white.withOpacity(0.2),
                           backgroundImage: _imageFile != null
                               ? FileImage(_imageFile!)
-                              : const AssetImage('assets/sign_icon.png'),
+                              : const AssetImage('assets/image/sign_icon.png'),
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Container(
@@ -177,10 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: TextStyle(color: Colors.black54),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.pushReplacementNamed(
-                              context,
-                              '/login',
-                            ),
+                            onPressed: () =>GoRouter.of(context).pushReplacement(AppRouter.kSignIn),
                             child: const Text(
                               "Login",
                               style: TextStyle(

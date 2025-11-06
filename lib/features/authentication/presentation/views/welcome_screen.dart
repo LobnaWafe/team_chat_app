@@ -1,4 +1,6 @@
+import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/custom_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -32,19 +34,21 @@ class WelcomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
             const SizedBox(height: 50),
-            Image.asset('assets/chat_icon.png', height: 100),
+            Image.asset('assets/image/chat_icon.png', height: 100),
             const SizedBox(height: 80),
             CustomButton(
               text: "Sign In",
               onTap: () {
-                Navigator.pushNamed(context, '/login');
+               // Navigator.pushNamed(context, '/login');
+                GoRouter.of(context).push(AppRouter.kSignIn);
               },
             ),
             const SizedBox(height: 16),
             CustomButton(
               text: "Sign Up",
               onTap: () {
-                Navigator.pushNamed(context, '/signup');
+               // Navigator.pushNamed(context, '/signup');
+                GoRouter.of(context).push(AppRouter.kSignUp);
               },
             ),
           ],

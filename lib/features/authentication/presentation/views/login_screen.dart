@@ -2,8 +2,10 @@
 import 'package:chats_app/features/authentication/presentation/view_model/cubits/cubit/auth_cubit.dart';
 import 'package:chats_app/features/authentication/presentation/widgets/TextField.dart';
 import 'package:chats_app/features/authentication/presentation/widgets/custom_button.dart';
+import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -57,7 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   _showSnackBar('Logging in...', Colors.blueAccent);
                 } else if (state is AuthSuccess) {
                   _showSnackBar(state.message, Colors.green);
-                  Navigator.pushReplacementNamed(context, '/home');
+                //  Navigator.pushReplacementNamed(context, '/home');
+                GoRouter.of(context).pushReplacement(AppRouter.knormalNavigation);
                 } else if (state is AuthError) {
                   _showSnackBar(state.message, Colors.redAccent);
                 }
@@ -81,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    Center(child: Image.asset("assets/sign_icon.png", height: 100)),
+                    Center(child: Image.asset("assets/image/sign_icon.png", height: 100)),
                     const SizedBox(height: 20),
                     CustomTextField(name: "Email", hint: "Enter your email", controller: emailController),
                     const SizedBox(height: 15),
