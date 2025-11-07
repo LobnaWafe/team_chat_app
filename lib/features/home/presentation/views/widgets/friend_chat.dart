@@ -1,58 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:chats_app/features/home/data/models/chats_model.dart';
+import 'package:chats_app/features/search_users/data/models/user_model.dart';
 
 class FriendChat extends StatelessWidget {
-  final String imageUrl;
-  final String friendEmail;
-  final String lastMessage;
-  final String lastTime;
+  final ChatModel chat;
+  final ChatUser friend;
+  final VoidCallback? onTap;
 
   const FriendChat({
     super.key,
-    required this.imageUrl,
-    required this.friendEmail,
-    required this.lastMessage,
-    required this.lastTime,
+    required this.chat,
+    required this.friend,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    ImageProvider avatarImage;
+    final time = chat.lastMessageTime != null
+        ? DateFormat('hh:mm a').format(chat.lastMessageTime!)
+        : '';
 
-    if (imageUrl.startsWith('assets/')) {
-      avatarImage = AssetImage(imageUrl);
-    } else if (imageUrl.isNotEmpty) {
-      avatarImage = NetworkImage(imageUrl);
-    } else {
-      avatarImage = const AssetImage('assets/images/profile.png');
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 25,
-            backgroundImage: avatarImage,
-          ),
-          Expanded(
-            child: ListTile(
-              title: Text(
-                friendEmail,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle:
-                  Text(lastMessage, style: const TextStyle(color: Colors.grey)),
-              trailing: Text(
-                lastTime,
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
-              ),
-              onTap: () {
-                // TODO: انتقلي لشاشة الشات مع اليوزر ده
-              },
-            ),
-          ),
-        ],
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: friend.imageUrl.isNotEmpty
+            ? NetworkImage(friend.imageUrl)
+            : const AssetImage('assets/images/profile.png') as ImageProvider,
+        radius: 25,
       ),
+      title: Text(
+        friend.name,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+      subtitle: Text(
+        chat.lastMessage,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      trailing: Text(
+        time,
+        style: const TextStyle(fontSize: 12, color: Colors.grey),
+      ),
+      onTap: onTap,
     );
   }
 }

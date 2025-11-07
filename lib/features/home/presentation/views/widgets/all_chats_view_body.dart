@@ -1,100 +1,56 @@
-import 'package:chats_app/core/my_account.dart';
+import 'package:chats_app/features/home/data/models/chats_model.dart';
 import 'package:chats_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
-import 'package:chats_app/features/home/presentation/views/widgets/custom_appbar.dart';
-import 'package:chats_app/features/home/presentation/views/widgets/custom_search.dart';
-import 'package:chats_app/features/home/presentation/views/widgets/friend_chat.dart';
+import 'package:chats_app/features/search_users/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:chats_app/core/my_account.dart';
+import 'package:chats_app/features/home/presentation/views/widgets/friend_chat.dart';
 
-class AllChatsViewBody extends StatelessWidget {
+class AllChatsViewBody extends StatefulWidget {
   const AllChatsViewBody({super.key});
 
   @override
+  State<AllChatsViewBody> createState() => _AllChatsViewBodyState();
+}
+
+class _AllChatsViewBodyState extends State<AllChatsViewBody> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ChatsCubit>().getChatsWithFriends(my_email!);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return BlocBuilder<ChatsCubit, ChatsState>(
+      builder: (context, state) {
+        if (state is ChatsLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-    return BlocProvider(
-      create: (context) => ChatsCubit()..getChats(my_email!),
-      child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: isDark
-                  ? [const Color(0xFFCCE8FE), Colors.black, Colors.black]
-                  : const [Color(0xFFCCE8FE), Colors.white, Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 32, right: 16, left: 16),
-            child: Column(
-              children: [
-                const CustomAppbar(),
-                const SizedBox(height: 20),
-                const Row(
-                  children: [
-                    Spacer(),
-                    Text(
-                      "Chat List",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const CustomSearch(),
-                Expanded(
-                  child: BlocBuilder<ChatsCubit, ChatsState>(
-                    builder: (context, state) {
-                      if (state is ChatsLoading) {
-                        return const Center(
-                            child: CircularProgressIndicator());
-                      } else if (state is ChatsLoaded) {
-                        if (state.chats.isEmpty) {
-                          return const Center(child: Text("No Chats Yet"));
-                        }
+        if (state is ChatsError) {
+          return Center(child: Text('Error: ${state.message}'));
+        }
 
-                        return ListView.builder(
-                          itemCount: state.chats.length,
-                          itemBuilder: (context, index) {
-                            final chat = state.chats[index];
-                            final members = chat.members;
+        if (state is ChatsWithUsersLoaded) {
+          if (state.chatsWithUsers.isEmpty) {
+            return const Center(child: Text("No chats yet 😅"));
+          }
 
-                            final friendEmail = members.firstWhere(
-                              (email) => email != my_email,
-                              orElse: () => "Unknown",
-                            );
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: state.chatsWithUsers.length,
+            itemBuilder: (context, index) {
+              final chat = state.chatsWithUsers[index]['chat'] as ChatModel;
+              final friend = state.chatsWithUsers[index]['friend'] as ChatUser;
 
-                            final lastMessage = chat.lastMessage;
-                            final lastTime = chat.lastMessageTime != null
-                                ? DateFormat('hh:mm a')
-                                    .format(chat.lastMessageTime!)
-                                : '';
+              return FriendChat(chat: chat, friend: friend);
+            },
+          );
+        }
 
-                            return FriendChat(
-                              imageUrl: chat.imageUrl,
-                              friendEmail: friendEmail,
-                              lastMessage: lastMessage,
-                              lastTime: lastTime,
-                            );
-                          },
-                        );
-                      } else if (state is ChatsError) {
-                        return Center(child: Text('Error: ${state.message}'));
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+        return const SizedBox();
+      },
     );
   }
 }
