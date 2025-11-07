@@ -47,6 +47,7 @@ class FriendChat extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[600], fontSize: 12),
               ),
               onTap: () {
+                
                 // TODO: انتقلي لشاشة الشات مع اليوزر ده
               },
             ),

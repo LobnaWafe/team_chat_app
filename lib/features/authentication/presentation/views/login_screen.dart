@@ -1,4 +1,5 @@
 
+import 'package:chats_app/core/my_account.dart';
 import 'package:chats_app/features/authentication/presentation/view_model/cubits/cubit/auth_cubit.dart';
 import 'package:chats_app/features/authentication/presentation/widgets/TextField.dart';
 import 'package:chats_app/features/authentication/presentation/widgets/custom_button.dart';
@@ -98,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 email: emailController.text.trim(),
                                 password: passwordController.text,
                               );
+                              my_email=emailController.text.trim(); //<--
                         },
                       ),
                     ),
