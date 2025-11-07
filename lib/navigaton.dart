@@ -73,7 +73,11 @@ class _NormalBottomState extends State<NormalBottom> {
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
                 child: Icon(
+<<<<<<< HEAD
                   _currentIndex == 2 ? Icons.person : Icons.person_outlined,
+=======
+                  _currentIndex == 2 ? Icons.person : Icons.person_2_outlined,
+>>>>>>> 62f6b4bcf70d6a4e5705d4fff680ce1c35ca6255
                   size: 28, 
                   color: _currentIndex == 2 ? Colors.black : Colors.grey,
                 ),
