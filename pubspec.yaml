@@ -42,13 +42,15 @@ dependencies:
   get_it: ^8.2.0
   image_picker: ^1.2.0
   cached_network_image: ^3.4.1
-  firebase_core: ^4.1.1
   cloud_firestore: ^6.0.2
   url_launcher: ^6.3.2
   google_maps_flutter: ^2.13.1
   location: ^8.0.1
   flutter_svg: ^2.0.9
   geolocator: ^13.0.1
+  equatable: ^2.0.5
+  firebase_core: ^4.2.1
+  firebase_auth: ^6.1.2
   #geocoding: ^3.0.0
   #geocoding_api: ^1.0.1
   flutter_localizations:

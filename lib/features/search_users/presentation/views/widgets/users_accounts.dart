@@ -1,27 +1,52 @@
+import 'package:chats_app/features/search_users/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class UsersAccounts extends StatelessWidget {
-  const UsersAccounts({super.key});
+  final ChatUser chatUser; 
+
+  const UsersAccounts({
+    super.key,
+    required this.chatUser,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleAvatar(
-          radius: 25,
-          backgroundImage: AssetImage('assets/images/profile.png'),
-        ),
-        Expanded(
-          child: ListTile(
-            title: Text(
-              "Fatma Ramadan",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text("fatma@gmail.com", style: TextStyle(color: Colors.grey)),
+    final String name = chatUser.name;
+    final String email = chatUser.email;
+    final String imageUrl = chatUser.imageUrl;
 
+    ImageProvider avatarImage;
+    if (imageUrl.startsWith('assets/')) {
+      avatarImage = AssetImage(imageUrl);
+    } else {
+      avatarImage = NetworkImage(imageUrl);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 25,
+            backgroundImage: avatarImage,
           ),
-        ),
-      ],
+          Expanded(
+            child: ListTile(
+              title: Text(
+                name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                email,
+                style: const TextStyle(color: Colors.grey),
+              ),
+              onTap: () {
+             
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

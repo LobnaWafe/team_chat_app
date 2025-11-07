@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chats_app/core/my_account.dart';
 import 'package:chats_app/features/authentication/presentation/view_model/cubits/cubit/auth_cubit.dart';
 import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
@@ -169,6 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 password: _passwordController.text,
                                 image: _imageFile,
                               );
+                              my_email=_emailController.text.trim();
                         },
                       ),
                       const SizedBox(height: 10),
@@ -180,7 +182,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             style: TextStyle(color: Colors.black54),
                           ),
                           TextButton(
-                            onPressed: () =>GoRouter.of(context).pushReplacement(AppRouter.kSignIn),
+                            onPressed: () {
+                              
+                              GoRouter.of(context).pushReplacement(AppRouter.kSignIn);
+
+                            },
                             child: const Text(
                               "Login",
                               style: TextStyle(
