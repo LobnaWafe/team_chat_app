@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:chats_app/cach/cach_helper.dart';
 import 'package:chats_app/features/authentication/data/models/user_model.dart';
 import 'package:chats_app/features/profile/presentation/view_models/app_language_cubit/app_language_cubit.dart';
@@ -9,6 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileViewBody extends StatefulWidget {
   const ProfileViewBody({super.key});
@@ -38,7 +41,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
       child: Column(
         children: [
-          // ✅ صورة المستخدم بتصميم عصري
+          // ✅ صورة المستخدم بتصميم عصري مع إمكانية التعديل
           Center(
             child: Stack(
               alignment: Alignment.bottomRight,
@@ -51,20 +54,25 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                       ? AssetImage(userModel!.imageUrl) as ImageProvider
                       : NetworkImage(userModel!.imageUrl),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 6,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
+                // 👆 اضغط على الأيقونة لتغيير الصورة الشخصية
+                GestureDetector(
+                  onTap: changeProfileImage,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(6),
+                    child:
+                        Icon(Icons.edit, color: Colors.blue.shade600, size: 22),
                   ),
-                  padding: const EdgeInsets.all(6),
-                  child: Icon(Icons.edit, color: Colors.blue.shade600, size: 22),
                 ),
               ],
             ),
@@ -135,6 +143,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     );
   }
 
+  // 📝 AlertDialog لتعديل الاسم
   void showEditNameDialog(context, String name) {
     TextEditingController textEditingController = TextEditingController(
       text: name,
@@ -143,7 +152,8 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text("Edit Name", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        title: const Text("Edit Name",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         content: TextField(
           cursorColor: Colors.blueAccent,
           controller: textEditingController,
@@ -177,6 +187,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     );
   }
 
+  // 🔹 دالة تغيير الاسم وتحديث Firestore + الكاش + الواجهة
   void changeNameMethod(TextEditingController textEditingController) async {
     var newUser = UserModel(
       uid: userModel!.uid,
@@ -192,6 +203,62 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     setState(() {
       userModel = newUser;
     });
+  }
+
+  // 🔹 دالة تغيير الصورة الشخصية مع حذف الصورة القديمة
+  Future<void> changeProfileImage() async {
+    try {
+      final picker = ImagePicker();
+      final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedImage == null) return; // المستخدم مقالش صورة
+
+      final file = File(pickedImage.path);
+      final fileName =
+          '${userModel!.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+      final supabase = Supabase.instance.client;
+
+      // 🔹 مسح الصورة القديمة لو موجودة
+      if (userModel!.imageUrl.isNotEmpty &&
+          !userModel!.imageUrl.startsWith("assets")) {
+        final oldFileName = userModel!.imageUrl.split('/').last;
+        await supabase.storage.from('profile_pics').remove([oldFileName]);
+      }
+
+      // 🔹 رفع الصورة الجديدة
+      await supabase.storage
+          .from('profile_pics')
+          .upload(fileName, file,
+              fileOptions: const FileOptions(cacheControl: '3600', upsert: false));
+
+      final imageUrl = supabase.storage.from('profile_pics').getPublicUrl(fileName);
+
+      // 🔹 تحديث Firestore
+      final users = FirebaseFirestore.instance.collection("users");
+      await users.doc(userModel!.uid).update({'imageUrl': imageUrl});
+
+      // 🔹 تحديث الكاش والواجهة
+      var newUser = UserModel(
+        uid: userModel!.uid,
+        name: userModel!.name,
+        email: userModel!.email,
+        imageUrl: imageUrl,
+        createdAt: userModel!.createdAt,
+      );
+
+      await CacheHelper.saveCustomData(key: "user", value: newUser);
+      setState(() {
+        userModel = newUser;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Profile picture updated successfully ✅")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    }
   }
 
   OutlineInputBorder buildBorder({Color color = Colors.black26}) {
