@@ -19,10 +19,12 @@ class AllChatsViewBody extends StatefulWidget {
 }
 
 class _AllChatsViewBodyState extends State<AllChatsViewBody> {
+  String searchText = ''; // 🔍 لتخزين النص المكتوب في البحث
+
   @override
   void initState() {
     super.initState();
-     context.read<ChatsCubit>().listenToChatsWithFriends(my_email!); //
+    context.read<ChatsCubit>().listenToChatsWithFriends(my_email!);
   }
 
   @override
@@ -45,32 +47,39 @@ class _AllChatsViewBodyState extends State<AllChatsViewBody> {
           children: [
             const CustomAppbar(),
             const SizedBox(height: 10),
-
             Expanded(
               child: CustomScrollView(
                 physics: const BouncingScrollPhysics(),
                 slivers: [
+                  // ✅ العنوان + البحث
                   SliverToBoxAdapter(
                     child: Column(
-                      children:  [
+                      children: [
                         Row(
                           children: [
-                            Spacer(),
+                            const Spacer(),
                             Text(
                               S.of(context).MyChats,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.bold),
                             ),
-                            Spacer(),
+                            const Spacer(),
                           ],
                         ),
-                        SizedBox(height: 20),
-                        CustomSearch(),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 20),
+                        CustomSearch(
+                          onChanged: (value) {
+                            setState(() {
+                              searchText = value.toLowerCase();
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ),
 
+                  // ✅ عرض الشاتات
                   BlocBuilder<ChatsCubit, ChatsState>(
                     builder: (context, state) {
                       if (state is ChatsLoading) {
@@ -86,7 +95,19 @@ class _AllChatsViewBodyState extends State<AllChatsViewBody> {
                       }
 
                       if (state is ChatsWithUsersLoaded) {
-                        if (state.chatsWithUsers.isEmpty) {
+                        var chatsWithUsers = state.chatsWithUsers;
+
+                        // 🔍 الفلترة حسب النص المكتوب
+                        if (searchText.isNotEmpty) {
+                          chatsWithUsers = chatsWithUsers.where((item) {
+                            final friend =
+                                item['friend'] as ChatUser?;
+                            final name = friend?.name?.toLowerCase() ?? '';
+                            return name.startsWith(searchText);
+                          }).toList();
+                        }
+
+                        if (chatsWithUsers.isEmpty) {
                           return const SliverFillRemaining(
                             child: Center(child: Text("No chats yet 😅")),
                           );
@@ -95,20 +116,22 @@ class _AllChatsViewBodyState extends State<AllChatsViewBody> {
                         return SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
-                              final chat = state.chatsWithUsers[index]['chat']
-                                  as ChatModel;
-                              final friend = state.chatsWithUsers[index]['friend']
-                                  as ChatUser;
+                              final chat =
+                                  chatsWithUsers[index]['chat'] as ChatModel;
+                              final friend =
+                                  chatsWithUsers[index]['friend'] as ChatUser;
 
                               return GestureDetector(
-                                onTap:(){
-                                   GoRouter.of(context).push(AppRouter.kChat,extra: friend);
+                                onTap: () {
+                                  GoRouter.of(context).push(
+                                    AppRouter.kChat,
+                                    extra: friend,
+                                  );
                                 },
-                                child: FriendChat(
-                                    chat: chat, friend: friend),
+                                child: FriendChat(chat: chat, friend: friend),
                               );
                             },
-                            childCount: state.chatsWithUsers.length,
+                            childCount: chatsWithUsers.length,
                           ),
                         );
                       }
