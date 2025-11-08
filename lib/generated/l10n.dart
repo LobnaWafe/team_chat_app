@@ -93,6 +93,121 @@ class S {
       args: [],
     );
   }
+
+  /// `No Users yet`
+  String get No_Users_yet {
+    return Intl.message(
+      'No Users yet',
+      name: 'No_Users_yet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Chat`
+  String get NewChat {
+    return Intl.message('New Chat', name: 'NewChat', desc: '', args: []);
+  }
+
+  /// `Search...`
+  String get Search {
+    return Intl.message('Search...', name: 'Search', desc: '', args: []);
+  }
+
+  /// `My Chats`
+  String get MyChats {
+    return Intl.message('My Chats', name: 'MyChats', desc: '', args: []);
+  }
+
+  /// `Start your conversations`
+  String get Welcome {
+    return Intl.message(
+      'Start your conversations',
+      name: 'Welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign In`
+  String get SignIn {
+    return Intl.message('Sign In', name: 'SignIn', desc: '', args: []);
+  }
+
+  /// `Sign Up`
+  String get SignUp {
+    return Intl.message('Sign Up', name: 'SignUp', desc: '', args: []);
+  }
+
+  /// `Logging in...`
+  String get LoggingIn {
+    return Intl.message('Logging in...', name: 'LoggingIn', desc: '', args: []);
+  }
+
+  /// `Login`
+  String get Login {
+    return Intl.message('Login', name: 'Login', desc: '', args: []);
+  }
+
+  /// `Email`
+  String get Email {
+    return Intl.message('Email', name: 'Email', desc: '', args: []);
+  }
+
+  /// `Password`
+  String get Password {
+    return Intl.message('Password', name: 'Password', desc: '', args: []);
+  }
+
+  /// `Enter your email`
+  String get Enter_your_email {
+    return Intl.message(
+      'Enter your email',
+      name: 'Enter_your_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your password`
+  String get Enter_your_password {
+    return Intl.message(
+      'Enter your password',
+      name: 'Enter_your_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creating account...`
+  String get CreatingAccount {
+    return Intl.message(
+      'Creating account...',
+      name: 'CreatingAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your name`
+  String get Enter_your_name {
+    return Intl.message(
+      'Enter your name',
+      name: 'Enter_your_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get Already_have_account {
+    return Intl.message(
+      'Already have an account?',
+      name: 'Already_have_account',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

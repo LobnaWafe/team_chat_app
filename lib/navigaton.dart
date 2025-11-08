@@ -69,13 +69,14 @@ class _NormalBottomState extends State<NormalBottom> {
             icon: Padding(
               padding: const EdgeInsets.only(bottom: 6), 
               child: AnimatedScale(
-                scale: _currentIndex == 0 ? 1.5 : 1, 
+                scale: _currentIndex == 2 ? 1.5 : 1, 
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
                 child: Icon(
-                  _currentIndex == 0 ? Icons.person : Icons.person_2_outlined,
+                  _currentIndex == 2 ? Icons.person : Icons.person_2_outlined,
+
                   size: 28, 
-                  color: _currentIndex == 0 ? Colors.black : Colors.grey,
+                  color: _currentIndex == 2 ? Colors.black : Colors.grey,
                 ),
               ),
             ),

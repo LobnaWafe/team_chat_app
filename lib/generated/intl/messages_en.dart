@@ -22,6 +22,30 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "Already_have_account": MessageLookupByLibrary.simpleMessage(
+      "Already have an account?",
+    ),
+    "CreatingAccount": MessageLookupByLibrary.simpleMessage(
+      "Creating account...",
+    ),
+    "Email": MessageLookupByLibrary.simpleMessage("Email"),
+    "Enter_your_email": MessageLookupByLibrary.simpleMessage(
+      "Enter your email",
+    ),
+    "Enter_your_name": MessageLookupByLibrary.simpleMessage("Enter your name"),
+    "Enter_your_password": MessageLookupByLibrary.simpleMessage(
+      "Enter your password",
+    ),
+    "LoggingIn": MessageLookupByLibrary.simpleMessage("Logging in..."),
+    "Login": MessageLookupByLibrary.simpleMessage("Login"),
+    "MyChats": MessageLookupByLibrary.simpleMessage("My Chats"),
+    "NewChat": MessageLookupByLibrary.simpleMessage("New Chat"),
+    "No_Users_yet": MessageLookupByLibrary.simpleMessage("No Users yet"),
+    "Password": MessageLookupByLibrary.simpleMessage("Password"),
+    "Search": MessageLookupByLibrary.simpleMessage("Search..."),
+    "SignIn": MessageLookupByLibrary.simpleMessage("Sign In"),
+    "SignUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
+    "Welcome": MessageLookupByLibrary.simpleMessage("Start your conversations"),
     "appLanguage": MessageLookupByLibrary.simpleMessage("App Language"),
     "hintTextChatPage": MessageLookupByLibrary.simpleMessage(
       "Type yor message",

@@ -1,3 +1,4 @@
+import 'package:chats_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -12,6 +13,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSignUp = text == S.of(context).SignUp;
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(30),
@@ -20,7 +23,18 @@ class CustomButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.6,
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          // ✅ لو الزرار SignUp استخدم تدرج، لو غير كده استخدم لون ثابت
+          gradient: isSignUp
+              ? const LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 78, 165, 236),
+                  Color.fromARGB(255, 130, 180, 220),
+                //  Color.fromARGB(255, 78, 165, 236),
+                    Color.fromARGB(255, 162, 221, 209),
+                  ],
+                )
+              : null,
+          color: isSignUp ? null : Colors.white,
           borderRadius: BorderRadius.circular(30),
           boxShadow: const [
             BoxShadow(
@@ -33,8 +47,8 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(
-              color: Color(0xFF1C3A5F),
+            style: TextStyle(
+              color: isSignUp ? Colors.white : const Color(0xFF1C3A5F),
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),

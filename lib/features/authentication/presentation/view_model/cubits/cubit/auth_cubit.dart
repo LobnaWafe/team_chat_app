@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:chats_app/cach/cach_helper.dart';
+import 'package:chats_app/features/authentication/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -30,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
         return;
       }
 
-      String imageUrl = 'assets/sign_icon.png';
+      String imageUrl = 'assets/image/sign_icon.png';
 
       // 2️⃣ رفع الصورة على Supabase Storage
       if (image != null) {
@@ -81,7 +83,12 @@ class AuthCubit extends Cubit<AuthState> {
         return;
       }
 
+   final userData = UserModel.fromJson(doc.data()!);
+     await CacheHelper.saveCustomData(key: "user", value: userData);
+
       emit(AuthSuccess(message: "Login successful!"));
+   
+      
     } on AuthApiException catch (e) {
       if (e.message.contains("Invalid login credentials")) {
         emit(AuthError(message: "invalid_credentials"));

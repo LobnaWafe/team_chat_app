@@ -1,30 +1,60 @@
+import 'package:chats_app/cach/cach_helper.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
+import 'package:chats_app/features/home/data/models/chats_model.dart';
+import 'package:chats_app/features/search_users/data/models/user_model.dart';
 class FriendChat extends StatelessWidget {
-  const FriendChat({super.key});
+  final ChatModel chat;
+  final ChatUser friend;
+  final VoidCallback? onTap;
+
+  const FriendChat({
+    super.key,
+    required this.chat,
+    required this.friend,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleAvatar(
-          radius: 25,
-          backgroundImage: AssetImage('assets/images/profile.png'),
+    // ✅ هنا بتحملي اللغة كل مرة لما الـ widget يُبنى
+    final lang = CacheHelper.getData(key: "appLanguage") ?? "en";
+
+    final time = chat.lastMessageTime != null
+        ? DateFormat('hh:mm a').format(chat.lastMessageTime!)
+        : '';
+
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: friend.imageUrl.isNotEmpty
+            ? NetworkImage(friend.imageUrl)
+            : const AssetImage('assets/images/profile.png') as ImageProvider,
+        radius: 25,
+      ),
+      title: Text(
+        friend.name,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
         ),
-        Expanded(
-          child: ListTile(
-            title: Text(
-              "Fatma Ramadan",
-              style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      subtitle: chat.lastMessage == ""
+          ? Align(
+              alignment: lang == "en"
+                  ? Alignment.centerLeft
+                  : Alignment.centerRight,
+              child: const Icon(Icons.location_on),
+            )
+          : Text(
+              chat.lastMessage,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            subtitle: Text("Hellooo", style: TextStyle(color: Colors.grey)),
-            trailing: Text(
-              "12:45 PM",
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
-            ),
-          ),
-        ),
-      ],
+      trailing: Text(
+        time,
+        style: const TextStyle(fontSize: 12, color: Colors.grey),
+      ),
+      onTap: onTap,
     );
   }
 }
