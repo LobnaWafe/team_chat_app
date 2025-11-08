@@ -78,6 +78,12 @@ abstract class AppRouter {
         builder: (context, state) => NormalBottom(),
       ),
 
+  
+      GoRoute(
+        path: kWelcome,
+        builder: (context, state) => WelcomeScreen()
+      ),
+
       // ✅ شاشة الخريطة
       GoRoute(
         path: kMap,
