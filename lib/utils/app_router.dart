@@ -28,6 +28,6 @@ abstract class AppRouter {
       reciverEmail: data['reciverEmail'],
     );
     }),
-   
+  
   ]);
 }
