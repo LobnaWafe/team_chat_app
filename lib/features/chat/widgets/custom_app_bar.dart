@@ -1,23 +1,24 @@
 
+import 'package:chats_app/features/search_users/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class AppBarRow extends StatelessWidget {
-  const AppBarRow({super.key});
-
+  const AppBarRow({super.key, required this.chatUser});
+final ChatUser chatUser;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CircleAvatar(
+         CircleAvatar(
           radius: 22, // حجم الصورة
           backgroundColor: Colors.transparent, // لون الخلفية لو الصورة ما اتحملت
-          backgroundImage: NetworkImage(
-            "https://hkxtaqbisnboczqhsodv.supabase.co/storage/v1/object/public/avatars/profilePhotos/1759188884597.png",
-          ),
+          backgroundImage:  chatUser.imageUrl.isNotEmpty
+            ? NetworkImage(chatUser.imageUrl)
+            : const AssetImage('assets/images/profile.png') as ImageProvider,
         ),
         const SizedBox(width: 8),
-        const Text(
-          "Lobna Wafe",
+         Text(
+          chatUser.name ,
           style: TextStyle(fontSize: 18),
         ),
       ],

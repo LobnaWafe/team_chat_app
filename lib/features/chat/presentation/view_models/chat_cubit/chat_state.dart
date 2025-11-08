@@ -10,3 +10,10 @@ final class ChatSuccess extends ChatState {
  ChatSuccess({required this.messages});
 
 }
+ 
+final class ChatError extends ChatState{
+  final String errorMsg;
+
+  ChatError({required this.errorMsg});
+  
+}

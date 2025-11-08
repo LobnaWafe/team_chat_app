@@ -1,10 +1,12 @@
 import 'package:chats_app/features/home/data/models/chats_model.dart';
 import 'package:chats_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:chats_app/features/search_users/data/models/user_model.dart';
+import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chats_app/core/my_account.dart';
 import 'package:chats_app/features/home/presentation/views/widgets/friend_chat.dart';
+import 'package:go_router/go_router.dart';
 
 class AllChatsViewBody extends StatefulWidget {
   const AllChatsViewBody({super.key});
@@ -17,7 +19,7 @@ class _AllChatsViewBodyState extends State<AllChatsViewBody> {
   @override
   void initState() {
     super.initState();
-    context.read<ChatsCubit>().getChatsWithFriends(my_email!);
+    context.read<ChatsCubit>().listenToChatsWithFriends(my_email!); //
   }
 
   @override
@@ -44,7 +46,11 @@ class _AllChatsViewBodyState extends State<AllChatsViewBody> {
               final chat = state.chatsWithUsers[index]['chat'] as ChatModel;
               final friend = state.chatsWithUsers[index]['friend'] as ChatUser;
 
-              return FriendChat(chat: chat, friend: friend);
+              return GestureDetector(
+                onTap: (){
+                   GoRouter.of(context).push(AppRouter.kChat,extra: friend);
+                },
+                child: FriendChat(chat: chat, friend: friend));
             },
           );
         }

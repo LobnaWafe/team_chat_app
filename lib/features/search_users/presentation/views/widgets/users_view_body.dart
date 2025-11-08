@@ -1,8 +1,10 @@
 import 'package:chats_app/features/search_users/presentation/manager/cubit/users_cubit.dart';
 import 'package:chats_app/features/search_users/presentation/views/widgets/users_accounts.dart';
+import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chats_app/features/home/presentation/views/widgets/custom_search.dart';
+import 'package:go_router/go_router.dart';
 
 class UsersViewBody extends StatelessWidget {
   const UsersViewBody({super.key});
@@ -67,8 +69,13 @@ class UsersViewBody extends StatelessWidget {
                         itemCount: users.length,
                         itemBuilder: (context, index) {
                           final user = users[index];
-                          return UsersAccounts(
-                           chatUser: user,
+                          return GestureDetector(
+                            onTap: (){
+                              GoRouter.of(context).push(AppRouter.kChat,extra: users[index]);
+                            },
+                            child: UsersAccounts(
+                             chatUser: user,
+                            ),
                           );
                         },
                       );

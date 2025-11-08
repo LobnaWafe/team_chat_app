@@ -1,10 +1,12 @@
 
+import 'package:chats_app/features/authentication/data/models/user_model.dart';
 import 'package:chats_app/features/authentication/presentation/views/login_screen.dart';
 import 'package:chats_app/features/authentication/presentation/views/signup_screen.dart';
 import 'package:chats_app/features/authentication/presentation/views/welcome_screen.dart';
 import 'package:chats_app/features/chat/presentation/views/chat_view.dart';
 import 'package:chats_app/features/chat/presentation/views/map_view.dart';
 import 'package:chats_app/features/profile/presentation/view/profile_view.dart';
+import 'package:chats_app/features/search_users/data/models/user_model.dart';
 import 'package:chats_app/navigaton.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,7 +22,13 @@ abstract class AppRouter {
 
   
     GoRoute(path: '/',builder: (context,state)=>WelcomeScreen()),
-    GoRoute(path: kChat,builder: (context,state)=>ChatView()),
+    GoRoute(path: kChat,builder: (context,state){
+      final data = state.extra as ChatUser;
+     return ChatView(
+      chatUser:data
+    );
+    }
+    ),
     GoRoute(path: kSignIn,builder: (context,state)=>LoginScreen()),
     GoRoute(path: kProfile,builder: (context,state)=>ProfileView()),
     GoRoute(path: kSignUp,builder: (context,state)=>SignUpScreen()),

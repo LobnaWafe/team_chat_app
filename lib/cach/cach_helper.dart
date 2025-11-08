@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:chats_app/features/authentication/data/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -31,15 +34,15 @@ static Future<bool> saveData({required String key, required dynamic value}) asyn
 }
 
 
-  // static Future<bool> saveCustomData({required String key, required dynamic value}) async {
-  //  if (value is AuthModel) {
-  //   return await sharedPreferences.setString(key, jsonEncode(value.toJson()));
-  // } 
-  // else {
-  //   throw Exception("Unsupported type for saveData");
-  // }
+  static Future<bool> saveCustomData({required String key, required dynamic value}) async {
+   if (value is UserModel) {
+    return await sharedPreferences.setString(key, jsonEncode(value.toJson()));
+  } 
+  else {
+    throw Exception("Unsupported type for saveData");
+  }
     
-  // }
+  }
 
 
 //! this method to get data already saved in local database

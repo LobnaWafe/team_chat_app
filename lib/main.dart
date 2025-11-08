@@ -1,5 +1,6 @@
 import 'package:chats_app/cach/cach_helper.dart';
 import 'package:chats_app/features/authentication/presentation/view_model/cubits/cubit/auth_cubit.dart';
+import 'package:chats_app/features/home/presentation/manager/chats_cubit/chats_cubit.dart';
 import 'package:chats_app/features/home/presentation/manager/theme_cubit/app_themes.dart';
 import 'package:chats_app/features/home/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:chats_app/features/profile/presentation/view_models/app_language_cubit/app_language_cubit.dart';
@@ -40,6 +41,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider(create: (_) => ChatsCubit()),
         BlocProvider(create: (_)=>AuthCubit()),
         BlocProvider(
           create: (_) => AppLanguageCubit()
