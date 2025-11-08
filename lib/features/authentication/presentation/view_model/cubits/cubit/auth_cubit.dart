@@ -32,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
         return;
       }
 
-      String imageUrl = 'assets/sign_icon.png';
+      String imageUrl = 'assets/image/sign_icon.png';
 
       // 2️⃣ رفع الصورة على Supabase Storage
       if (image != null) {

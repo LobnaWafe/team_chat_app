@@ -1,3 +1,4 @@
+import 'package:chats_app/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearch extends StatelessWidget {
@@ -24,7 +25,7 @@ class CustomSearch extends StatelessWidget {
           textAlignVertical: TextAlignVertical.center, 
           style: const TextStyle(fontSize: 16,color: Colors.grey),
           decoration: InputDecoration(
-            hintText: "Search...",
+            hintText: S.of(context).Search,
             hintStyle: const TextStyle(
 
               color: Colors.grey,

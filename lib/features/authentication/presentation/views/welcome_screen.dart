@@ -1,3 +1,4 @@
+import 'package:chats_app/generated/l10n.dart';
 import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,15 +30,15 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Start with signing up or sign in',
+             Text(
+              S.of(context).Welcome,
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
             const SizedBox(height: 50),
             Image.asset('assets/image/chat_icon.png', height: 100),
             const SizedBox(height: 80),
             CustomButton(
-              text: "Sign In",
+              text: S.of(context).SignIn,
               onTap: () {
                // Navigator.pushNamed(context, '/login');
                 GoRouter.of(context).push(AppRouter.kSignIn);
@@ -45,7 +46,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             CustomButton(
-              text: "Sign Up",
+              text: S.of(context).SignUp,
               onTap: () {
                // Navigator.pushNamed(context, '/signup');
                 GoRouter.of(context).push(AppRouter.kSignUp);

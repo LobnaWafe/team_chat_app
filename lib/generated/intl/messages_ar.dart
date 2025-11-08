@@ -22,6 +22,28 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "Already_have_account": MessageLookupByLibrary.simpleMessage(
+      "لديك حساب بالفعل؟",
+    ),
+    "CreatingAccount": MessageLookupByLibrary.simpleMessage("جاري انشاء حساب"),
+    "Email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
+    "Enter_your_email": MessageLookupByLibrary.simpleMessage(
+      "ادخل بريدك الالكتروني",
+    ),
+    "Enter_your_name": MessageLookupByLibrary.simpleMessage("ادخل اسمك"),
+    "Enter_your_password": MessageLookupByLibrary.simpleMessage(
+      "ادخل كلمه المرور",
+    ),
+    "LoggingIn": MessageLookupByLibrary.simpleMessage("جاري تسجيل الدخول"),
+    "Login": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
+    "MyChats": MessageLookupByLibrary.simpleMessage("محادثاتي"),
+    "NewChat": MessageLookupByLibrary.simpleMessage("ابدأ محادثه جديده"),
+    "No_Users_yet": MessageLookupByLibrary.simpleMessage("لا يوجد مستخدمين"),
+    "Password": MessageLookupByLibrary.simpleMessage("كلمه المرور"),
+    "Search": MessageLookupByLibrary.simpleMessage("بحث"),
+    "SignIn": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
+    "SignUp": MessageLookupByLibrary.simpleMessage("انشاء حساب"),
+    "Welcome": MessageLookupByLibrary.simpleMessage("ابدأ معانا محادثتك"),
     "appLanguage": MessageLookupByLibrary.simpleMessage("لغه التطبيق"),
     "hintTextChatPage": MessageLookupByLibrary.simpleMessage("اكتب رسالتك"),
     "language": MessageLookupByLibrary.simpleMessage("العربيه"),

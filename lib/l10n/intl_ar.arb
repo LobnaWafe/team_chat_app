@@ -4,5 +4,21 @@
     "appLanguage":"لغه التطبيق",
     "language":"العربيه",
     "signOut":"تسجيل خروج",
-    "hintTextChatPage":"اكتب رسالتك"
+    "hintTextChatPage":"اكتب رسالتك",
+    "No_Users_yet":"لا يوجد مستخدمين",
+    "NewChat":"ابدأ محادثه جديده",
+    "Search":"بحث",
+    "MyChats":"محادثاتي",
+    "Welcome":"ابدأ معانا محادثتك",
+     "SignIn":"تسجيل دخول",
+    "SignUp":"انشاء حساب",
+    "LoggingIn":"جاري تسجيل الدخول",
+    "Login":"تسجيل دخول",
+    "Email":"البريد الالكتروني",
+    "Password":"كلمه المرور",
+    "Enter_your_email":"ادخل بريدك الالكتروني",
+    "Enter_your_password":"ادخل كلمه المرور",
+    "CreatingAccount":"جاري انشاء حساب",
+    "Enter_your_name":"ادخل اسمك",
+    "Already_have_account":"لديك حساب بالفعل؟"
 }

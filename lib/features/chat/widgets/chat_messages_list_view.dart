@@ -1,5 +1,7 @@
 import 'package:chats_app/features/chat/data/models/message_model.dart';
 import 'package:chats_app/features/chat/presentation/view_models/chat_cubit/chat_cubit.dart';
+import 'package:chats_app/features/chat/widgets/first_recive_message_container.dart';
+import 'package:chats_app/features/chat/widgets/first_send_message_container.dart';
 import 'package:chats_app/features/chat/widgets/recive_message_container.dart';
 import 'package:chats_app/features/chat/widgets/send_message_container.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ class ChatMessagesListView extends StatefulWidget {
     required this.senderEmail,
     required this.reciverEmail,
   });
-  
+
   final String senderEmail;
   final String reciverEmail;
 
@@ -23,7 +25,7 @@ class _ChatMessagesListViewState extends State<ChatMessagesListView> {
   @override
   void initState() {
     super.initState();
-    
+
     // ✅ استخدم addPostFrameCallback لتأكد أن الـ Cubit جاهز
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ChatCubit>().getMessages(
@@ -47,9 +49,16 @@ class _ChatMessagesListViewState extends State<ChatMessagesListView> {
             reverse: true,
             itemBuilder: (context, index) {
               final message = state.messages[index];
-              return message.to == widget.senderEmail
-                  ? SendMessageContainer(message: message)
-                  : ReciveMessageContainer(message: message);
+             return message.from == widget.senderEmail
+    ? (index < state.messages.length - 1 &&
+            state.messages[index + 1].from == message.from)
+        ? SendMessageContainer(message: message)
+        : FirstSendMessageContainer(message: message)
+    : (index < state.messages.length - 1 &&
+            state.messages[index + 1].to == message.to)
+        ? ReciveMessageContainer(message: message)
+        : FirstReciveMessageContainer(message: message);
+
             },
           );
         } else if (state is ChatError) {

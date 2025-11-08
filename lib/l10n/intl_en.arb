@@ -4,5 +4,21 @@
     "appLanguage":"App Language",
     "language":"English",
     "signOut":"Sign Out",
-    "hintTextChatPage":"Type yor message"
+    "hintTextChatPage":"Type yor message",
+    "No_Users_yet":"No Users yet",
+    "NewChat":"New Chat",
+    "Search":"Search...",
+    "MyChats":"My Chats",
+    "Welcome":"Start your conversations",
+    "SignIn":"Sign In",
+    "SignUp":"Sign Up",
+    "LoggingIn":"Logging in...",
+    "Login":"Login",
+    "Email":"Email",
+    "Password":"Password",
+    "Enter_your_email":"Enter your email",
+    "Enter_your_password":"Enter your password",
+    "CreatingAccount":"Creating account...",
+    "Enter_your_name":"Enter your name",
+    "Already_have_account":"Already have an account?"
 }

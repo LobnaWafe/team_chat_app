@@ -1,3 +1,4 @@
+import 'package:chats_app/cach/cach_helper.dart';
 import 'package:chats_app/core/my_account.dart';
 import 'package:chats_app/features/chat/data/models/message_model.dart';
 import 'package:chats_app/features/chat/presentation/view_models/chat_cubit/chat_cubit.dart';
@@ -14,6 +15,7 @@ import 'package:go_router/go_router.dart';
 class ChatViewBody extends StatelessWidget {
   const ChatViewBody({super.key, required this.chatUser});
   final ChatUser chatUser;
+ 
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,6 +43,7 @@ class ChatTextFeild extends StatefulWidget {
 
 class _ChatTextFeildState extends State<ChatTextFeild> {
   late TextEditingController messageController;
+   final lang = CacheHelper.getData(key: "appLanguage") ?? "en";
   @override
   void initState() {
     messageController = TextEditingController();
@@ -61,10 +64,13 @@ class _ChatTextFeildState extends State<ChatTextFeild> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 5),
+              padding:  EdgeInsets.only(left: 20, right: 5),
               child: TextField(
                 minLines: 1,
                 maxLines: null,
+                    textDirection: lang == 'ar'
+              ? TextDirection.rtl
+              : TextDirection.ltr,
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
                 cursorColor: Colors.black.withValues(alpha: 100),
@@ -86,6 +92,7 @@ class _ChatTextFeildState extends State<ChatTextFeild> {
                   filled: true,
                   contentPadding: EdgeInsets.only(left: 15),
                   hintText: S.of(context).hintTextChatPage,
+                  hintTextDirection:lang == 'ar' ? TextDirection.rtl : TextDirection.ltr,
                   border: buildBorder(),
                   enabledBorder: buildBorder(),
                   focusedBorder: buildBorder(),

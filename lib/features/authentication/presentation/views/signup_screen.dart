@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:chats_app/core/my_account.dart';
 import 'package:chats_app/features/authentication/presentation/view_model/cubits/cubit/auth_cubit.dart';
+import 'package:chats_app/generated/l10n.dart';
 import 'package:chats_app/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is AuthLoading) {
-                  _showSnackBar('Creating account...', Colors.blueAccent);
+                  _showSnackBar(S.of(context).CreatingAccount, Colors.blueAccent);
                 } else if (state is AuthSuccess) {
                   _showSnackBar(state.message, Colors.green);
                 //  Navigator.pushReplacementNamed(context, '/login');
@@ -107,8 +108,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const Text(
-                        "Sign Up",
+                       Text(
+                        S.of(context).SignUp,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 28,
@@ -143,26 +144,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       const SizedBox(height: 15),
                       CustomTextField(
-                        name: "Name",
-                        hint: "Enter your name",
+                        name: S.of(context).profileName,
+                        hint: S.of(context).Enter_your_name,
                         controller: _nameController,
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        name: "Email",
-                        hint: "Enter your email",
+                        name:S.of(context).Email,
+                        hint:S.of(context).Enter_your_email,
                         controller: _emailController,
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        name: "Password",
-                        hint: "Enter your password",
+                        name: S.of(context).Password,
+                        hint: S.of(context).Enter_your_password,
                         obscure: true,
                         controller: _passwordController,
                       ),
                       const SizedBox(height: 18),
                       CustomButton(
-                        text: "Sign Up",
+                        text: S.of(context).SignUp,
                         onTap: () {
                           context.read<AuthCubit>().signUp(
                                 name: _nameController.text.trim(),
@@ -177,8 +178,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Already have an account?",
+                           Text(
+                            S.of(context).Already_have_account,
                             style: TextStyle(color: Colors.black54),
                           ),
                           TextButton(
@@ -187,8 +188,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               GoRouter.of(context).pushReplacement(AppRouter.kSignIn);
 
                             },
-                            child: const Text(
-                              "Login",
+                            child:  Text(
+                              S.of(context).Login,
                               style: TextStyle(
                                 color: Color(0xFF5EBBFF),
                                 fontWeight: FontWeight.bold,

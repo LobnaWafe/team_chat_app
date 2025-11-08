@@ -13,7 +13,9 @@ class ChatView extends StatelessWidget {
     return BlocProvider(
       create: (context) => ChatCubit(),
       child: Scaffold(
-        appBar: AppBar(elevation: 0, title: AppBarRow(chatUser:chatUser)),
+        appBar: AppBar(elevation: 0, title: Directionality(
+          textDirection: TextDirection.ltr,
+          child: AppBarRow(chatUser:chatUser))),
         body: SafeArea(child: ChatViewBody(chatUser: chatUser,)),
       ),
     );
