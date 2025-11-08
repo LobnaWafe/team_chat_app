@@ -1,3 +1,4 @@
+import 'package:chats_app/cach/cach_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:chats_app/features/home/data/models/chats_model.dart';
@@ -8,13 +9,14 @@ class FriendChat extends StatelessWidget {
   final ChatUser friend;
   final VoidCallback? onTap;
 
-  const FriendChat({
+   FriendChat({
     super.key,
     required this.chat,
     required this.friend,
     this.onTap,
   });
 
+  final lang = CacheHelper.getData(key: "appLanguage");
   @override
   Widget build(BuildContext context) {
     final time = chat.lastMessageTime != null
@@ -35,7 +37,11 @@ class FriendChat extends StatelessWidget {
           fontSize: 16,
         ),
       ),
-      subtitle: Text(
+      subtitle:
+      chat.lastMessage==""?Align(
+        alignment:lang=="en"? Alignment.centerLeft:Alignment.centerRight,
+        child: Icon(Icons.location_on)):
+       Text(
         chat.lastMessage,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
