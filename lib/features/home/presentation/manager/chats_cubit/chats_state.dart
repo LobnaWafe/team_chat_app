@@ -11,12 +11,13 @@ class ChatsInitial extends ChatsState {}
 
 class ChatsLoading extends ChatsState {}
 
-class ChatsLoaded extends ChatsState {
-  final List<ChatModel> chats;
-  const ChatsLoaded(this.chats);
+class ChatsWithUsersLoaded extends ChatsState {
+  final List<Map<String, dynamic>> chatsWithUsers;
+
+  const ChatsWithUsersLoaded(this.chatsWithUsers);
 
   @override
-  List<Object?> get props => [chats];
+  List<Object?> get props => [chatsWithUsers];
 }
 
 class ChatsError extends ChatsState {

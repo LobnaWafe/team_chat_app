@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   _showSnackBar(state.message, Colors.green);
                 //  Navigator.pushReplacementNamed(context, '/home');
                 GoRouter.of(context).pushReplacement(AppRouter.knormalNavigation);
+                
                 } else if (state is AuthError) {
                   _showSnackBar(state.message, Colors.redAccent);
                 }
